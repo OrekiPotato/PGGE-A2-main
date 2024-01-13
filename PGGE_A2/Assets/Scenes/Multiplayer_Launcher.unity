@@ -156,6 +156,7 @@ MonoBehaviour:
   mConnectionProgress: {fileID: 1904367824}
   mBtnJoinRoom: {fileID: 326169118}
   mInpPlayerName: {fileID: 421955836}
+  mBtnBack: {fileID: 1604032448}
 --- !u!4 &117140713
 Transform:
   m_ObjectHideFlags: 0

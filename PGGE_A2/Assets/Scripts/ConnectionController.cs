@@ -17,6 +17,7 @@ namespace PGGE
             public GameObject mConnectionProgress;
             public GameObject mBtnJoinRoom;
             public GameObject mInpPlayerName;
+            public GameObject mBtnBack;
 
             bool isConnecting = false;
 
@@ -39,6 +40,7 @@ namespace PGGE
             {
                 mBtnJoinRoom.SetActive(false);
                 mInpPlayerName.SetActive(false);
+                mBtnBack.SetActive(false);
                 mConnectionProgress.SetActive(true);
 
                 // we check if we are connected or not, we join if we are, 
