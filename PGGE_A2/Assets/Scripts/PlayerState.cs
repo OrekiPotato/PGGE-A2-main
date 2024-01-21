@@ -75,22 +75,21 @@ public class PlayerState_MOVEMENT : PlayerState
 
         for (int i = 0; i < mPlayer.mAttackButtons.Length; ++i)
         {
-            if (mPlayer.mAttackButtons[i])
-            {
-                if (mPlayer.mBulletsInMagazine > 0)
-                {
-                    PlayerState_ATTACK attack =
-                  (PlayerState_ATTACK)mFsm.GetState(
-                            (int)PlayerStateType.ATTACK);
 
-                    attack.AttackID = i;
-                    mPlayer.mFsm.SetCurrentState(
+            // Moved "mPlayer.mBulletsInMagazine > 0" into main IF statement for easy readability.
+            if (mPlayer.mAttackButtons[i] && mPlayer.mBulletsInMagazine > 0)
+            {
+                PlayerState_ATTACK attack =
+                (PlayerState_ATTACK)mFsm.GetState(
                         (int)PlayerStateType.ATTACK);
-                }
-                else
-                {
-                    Debug.Log("No more ammo left");
-                }
+
+                attack.AttackID = i;
+                mPlayer.mFsm.SetCurrentState(
+                    (int)PlayerStateType.ATTACK);
+            }
+            else
+            {
+                Debug.Log("No more ammo left");
             }
         }
     }

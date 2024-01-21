@@ -18,6 +18,8 @@ namespace PGGE
             public GameObject mBtnJoinRoom;
             public GameObject mInpPlayerName;
             public GameObject mBtnBack;
+            public AudioSource mAudioSource;
+            public AudioClip joinAudioClip;
 
             bool isConnecting = false;
 
@@ -34,6 +36,7 @@ namespace PGGE
             void Start()
             {
                 mConnectionProgress.SetActive(false);
+                joinAudioClip = Resources.Load<AudioClip>("Sound/Scifi_Join");
             }
 
             public void Connect()
@@ -42,6 +45,12 @@ namespace PGGE
                 mInpPlayerName.SetActive(false);
                 mBtnBack.SetActive(false);
                 mConnectionProgress.SetActive(true);
+
+                // Play the join audio clip
+                if (mAudioSource != null && joinAudioClip != null)
+                {
+                    mAudioSource.PlayOneShot(joinAudioClip);
+                }
 
                 // we check if we are connected or not, we join if we are, 
                 // else we initiate the connection to the server.

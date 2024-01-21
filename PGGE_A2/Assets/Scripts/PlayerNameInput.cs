@@ -16,13 +16,12 @@ public class PlayerNameInput : MonoBehaviour
         mInputField = this.GetComponent<InputField>();
 
         string defaultName = string.Empty;
-        if (mInputField != null)
+
+        // Moved "PlayerPrefs.HasKey(playerNamePrefKey)" into main conditional statement for easy readability.
+        if (mInputField != null && PlayerPrefs.HasKey(playerNamePrefKey)) 
         {
-            if (PlayerPrefs.HasKey(playerNamePrefKey))
-            {
-                defaultName = PlayerPrefs.GetString(playerNamePrefKey);
-                mInputField.text = defaultName;
-            }
+            defaultName = PlayerPrefs.GetString(playerNamePrefKey);
+            mInputField.text = defaultName;
         }
         PhotonNetwork.NickName = defaultName;
     }
