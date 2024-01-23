@@ -28,7 +28,7 @@ public class PlayerMovement : MonoBehaviour
 
     private Vector3 mVelocity = new Vector3(0.0f, 0.0f, 0.0f);
 
-    void Start()
+    void Awake()
     {
         mCharacterController = GetComponent<CharacterController>();
     }

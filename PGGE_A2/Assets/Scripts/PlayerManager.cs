@@ -7,7 +7,6 @@ using UnityEngine.SceneManagement;
 public class PlayerManager : MonoBehaviourPunCallbacks
 {
     public string mPlayerPrefabName;
-    //public string mSecondPrefabName;
 
     public PlayerSpawnPoints mSpawnPoints;
 
@@ -18,9 +17,6 @@ public class PlayerManager : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-
-        // Decides which prefab to use depending on which prefab has already been instantiated.
-        //string prefabToUse = string.IsNullOrEmpty(mSecondPrefabName) ? mPlayerPrefabName : mSecondPrefabName;
 
         Transform randomSpawnTransform = mSpawnPoints.GetSpawnPoint();
         mPlayerGameObject = PhotonNetwork.Instantiate(mPlayerPrefabName,
