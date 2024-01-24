@@ -24,37 +24,39 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         PhotonNetwork.JoinLobby();
     }
 
-    //public override void OnJoinedLobby()
-    //{
-    //    if (connected)
-    //    {
-    //        StartCoroutine(CreateDumbRoomsAfterDelay());
-    //    }
-    //}
+    /* 
+        public override void OnJoinedLobby()
+        {
+            if (connected)
+            {
+                StartCoroutine(CreateDumbRoomsAfterDelay());
+            }
+        }
 
-    //IEnumerator CreateDumbRoomsAfterDelay()
-    //{
-    //    yield return new WaitForSeconds(1.5f);
-    //    StartCoroutine(CreateDumbRooms());
-    //}
+        IEnumerator CreateDumbRoomsAfterDelay()
+        {
+            yield return new WaitForSeconds(1.5f);
+            StartCoroutine(CreateDumbRooms());
+        }
 
-    //IEnumerator CreateDumbRooms()
-    //{
-    //    yield return new WaitForSeconds(1.0f);
+        IEnumerator CreateDumbRooms()
+        {
+            yield return new WaitForSeconds(1.0f);
 
-    //    // Creates the 5 dummy rooms
-    //    for (int i = 1; i <= 5; i++)
-    //    {
-    //        string dumbRoomName = "Dumb Room" + i;
-    //        RoomOptions roomOptions = new RoomOptions() { MaxPlayers = 3 };
-    //        PhotonNetwork.CreateRoom(dumbRoomName, roomOptions, TypedLobby.Default);
+            // Creates the 5 dummy rooms
+            for (int i = 1; i <= 5; i++)
+            {
+                string dumbRoomName = "Dumb Room" + i;
+                RoomOptions roomOptions = new RoomOptions() { MaxPlayers = 3 };
+                PhotonNetwork.CreateRoom(dumbRoomName, roomOptions, TypedLobby.Default);
 
-    //        // Instantiates the new dummy rooms into room list.
-    //        RoomItem newDumbRoom = Instantiate(roomItemPrefab, contentObject);
-    //        newDumbRoom.SetRoomName(dumbRoomName);
-    //        roomItemsList.Add(newDumbRoom);
-    //    }
-    //}
+                // Instantiates the new dummy rooms into room list.
+                RoomItem newDumbRoom = Instantiate(roomItemPrefab, contentObject);
+                newDumbRoom.SetRoomName(dumbRoomName);
+                roomItemsList.Add(newDumbRoom);
+            }
+        }
+    */
 
     public override void OnJoinedLobby()
     {
@@ -73,17 +75,11 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
             for (int i = 1; i <= 5; i++)
             {
-
                 string dumbRoomName = "Room " + i;
                 RoomOptions dumbOptions = new RoomOptions() { MaxPlayers = 3 };
-                //RoomOptions roomOptions = new RoomOptions() { MaxPlayers = 3 };
-                //PhotonNetwork.CreateRoom(dumbRoomName, roomOptions, TypedLobby.Default);
 
                 // Instantiates the new dummy rooms into room list.
-                RoomItem newDumbRoom = Instantiate(roomItemPrefab, contentObject);
-                newDumbRoom.SetRoomName(dumbRoomName);
-                newDumbRoom.UpdatePlayerCount(0, dumbOptions.MaxPlayers);
-                //newDumbRoom.SetButtonColor(Color.red);
+                RoomItem newDumbRoom = InstantiateRoomItem(dumbRoomName, 0, dumbOptions.MaxPlayers);
                 roomItemsList.Add(newDumbRoom);
             }
         }
@@ -92,7 +88,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
 
 
-    public void OnClickCreate()
+    public void OnClickCreate() // Utilized with the UI button to create a new room.
     {
         if (roomInputField.text.Length >= 1)
         {
@@ -125,9 +121,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         // Populates the list of rooms in the Lobby
         foreach (RoomInfo room in list)
         {
-            RoomItem newRoom = Instantiate(roomItemPrefab, contentObject);
-            newRoom.SetRoomName(room.Name);
-            newRoom.UpdatePlayerCount(room.PlayerCount, room.MaxPlayers); // Updates the player counter.
+            RoomItem newRoom = InstantiateRoomItem(room.Name, room.PlayerCount, room.MaxPlayers);
             roomItemsList.Add(newRoom);
         }
 
@@ -136,6 +130,16 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public void JoinRoom(string roomName)
     {
         PhotonNetwork.JoinRoom(roomName);
+    }
+
+    // Refactoring 2: Extract Method - Code used in instantiating of rooms has been extracted
+    // from InitiallyCreatedRooms() and UpdateRoomList() 
+    private RoomItem InstantiateRoomItem(string roomName, int playerCount, int maxPlayers)
+    {
+        RoomItem newRoom = Instantiate(roomItemPrefab, contentObject); // Adds the prefab in to Room List UI.
+        newRoom.SetRoomName(roomName);
+        newRoom.UpdatePlayerCount(playerCount, maxPlayers); // Updates the player counter in UI
+        return newRoom;
     }
 
 }
