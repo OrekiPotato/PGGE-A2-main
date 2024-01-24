@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
-using UnityEngine.SceneManagement;
 
 namespace PGGE
 {
@@ -18,9 +17,6 @@ namespace PGGE
             public GameObject mConnectionProgress;
             public GameObject mBtnJoinRoom;
             public GameObject mInpPlayerName;
-            public GameObject mBtnBack;
-            public AudioSource mAudioSource;
-            public AudioClip joinAudioClip;
 
             bool isConnecting = false;
 
@@ -37,21 +33,13 @@ namespace PGGE
             void Start()
             {
                 mConnectionProgress.SetActive(false);
-                joinAudioClip = Resources.Load<AudioClip>("Sound/Scifi_Join");
             }
 
             public void Connect()
             {
                 mBtnJoinRoom.SetActive(false);
                 mInpPlayerName.SetActive(false);
-                mBtnBack.SetActive(false);
                 mConnectionProgress.SetActive(true);
-
-                // Play the join audio clip
-                if (mAudioSource != null && joinAudioClip != null)
-                {
-                    mAudioSource.PlayOneShot(joinAudioClip);
-                }
 
                 // we check if we are connected or not, we join if we are, 
                 // else we initiate the connection to the server.
@@ -74,7 +62,7 @@ namespace PGGE
                 if (isConnecting)
                 {
                     Debug.Log("OnConnectedToMaster() was called by PUN");
-                    SceneManager.LoadScene("Multiplayer_Lobby");
+                    PhotonNetwork.JoinRandomRoom();
                 }
             }
 

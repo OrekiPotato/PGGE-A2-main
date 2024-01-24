@@ -4,7 +4,7 @@ using UnityEngine;
 using PGGE.Patterns;
 using Photon.Pun;
 
-public class Player_Multiplayer : MonoBehaviour
+public class Player_Multiplayer : MonoBehaviourPunCallbacks, IPunObservable
 {
     private PhotonView mPhotonView;
 
@@ -52,6 +52,24 @@ public class Player_Multiplayer : MonoBehaviour
         mFsm.Add(new PlayerState_Multiplayer_RELOAD(this));
         mFsm.SetCurrentState((int)PlayerStateType.MOVEMENT);
     }
+
+    #region IPunObservable implementation
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(mFiring);
+        }
+        else
+        {
+            // Network player, receive data
+            this.mFiring = (bool[])stream.ReceiveNext();
+        }
+
+    }
+
+    #endregion
 
     void Update()
     {
@@ -195,11 +213,12 @@ public class Player_Multiplayer : MonoBehaviour
     {
         if (mFiring[id] == false)
         {
-            StartCoroutine(Coroutine_Firing(id));
+            photonView.RPC("Coroutine_Firing", RpcTarget.All, id); 
         }
     }
 
-    public void FireBullet()
+    [PunRPC]
+    public void FireBullet(int id)
     {
         if (mBulletPrefab == null) return;
 
@@ -212,10 +231,11 @@ public class Player_Multiplayer : MonoBehaviour
         bullet.GetComponent<Rigidbody>().AddForce(dir * mBulletSpeed, ForceMode.Impulse);
     }
 
+    [PunRPC] 
     IEnumerator Coroutine_Firing(int id)
     {
         mFiring[id] = true;
-        FireBullet();
+        FireBullet(id);
         yield return new WaitForSeconds(1.0f / RoundsPerSecond[id]);
         mFiring[id] = false;
         mBulletsInMagazine -= 1;

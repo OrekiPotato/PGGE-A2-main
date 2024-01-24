@@ -7,7 +7,6 @@ using UnityEngine.SceneManagement;
 public class PlayerManager : MonoBehaviourPunCallbacks
 {
     public string mPlayerPrefabName;
-
     public PlayerSpawnPoints mSpawnPoints;
 
     [HideInInspector]
@@ -17,7 +16,6 @@ public class PlayerManager : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-
         Transform randomSpawnTransform = mSpawnPoints.GetSpawnPoint();
         mPlayerGameObject = PhotonNetwork.Instantiate(mPlayerPrefabName,
             randomSpawnTransform.position,
