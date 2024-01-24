@@ -156,10 +156,10 @@ MonoBehaviour:
   maxPlayersPerRoom: 4
   mConnectionProgress: {fileID: 1904367824}
   mBtnJoinRoom: {fileID: 326169118}
-  mInpPlayerName: {fileID: 421955836}
   mBtnBack: {fileID: 1604032448}
+  mInpPlayerName: {fileID: 421955836}
   mAudioSource: {fileID: 117140714}
-  joinAudioClip: {fileID: 0}
+  joinAudioClip: {fileID: 8300000, guid: 18fcf6be5b7e4934c82f8033d66b869e, type: 3}
 --- !u!4 &117140713
 Transform:
   m_ObjectHideFlags: 0

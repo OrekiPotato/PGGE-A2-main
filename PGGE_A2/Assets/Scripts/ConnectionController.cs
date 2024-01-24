@@ -16,9 +16,14 @@ namespace PGGE
 
             public GameObject mConnectionProgress;
             public GameObject mBtnJoinRoom;
+            public GameObject mBtnBack;
             public GameObject mInpPlayerName;
 
             bool isConnecting = false;
+
+            public AudioSource mAudioSource;
+            public AudioClip joinAudioClip;
+
 
             void Awake()
             {
@@ -37,9 +42,16 @@ namespace PGGE
 
             public void Connect()
             {
+                mBtnBack.SetActive(false);
                 mBtnJoinRoom.SetActive(false);
                 mInpPlayerName.SetActive(false);
                 mConnectionProgress.SetActive(true);
+
+                // Play the join audio clip
+                if (mAudioSource != null && joinAudioClip != null)
+                {
+                    mAudioSource.PlayOneShot(joinAudioClip);
+                }
 
                 // we check if we are connected or not, we join if we are, 
                 // else we initiate the connection to the server.
