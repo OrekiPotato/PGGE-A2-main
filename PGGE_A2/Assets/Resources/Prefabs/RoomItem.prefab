@@ -149,6 +149,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roomName: {fileID: 4012856473228982840}
+  playerCountText: {fileID: 2777150143847502176}
+  roomButton: {fileID: 9184471178090696367}
 --- !u!1 &7567767781048173086
 GameObject:
   m_ObjectHideFlags: 0

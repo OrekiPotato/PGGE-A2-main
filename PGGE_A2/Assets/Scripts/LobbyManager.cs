@@ -56,6 +56,40 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     //    }
     //}
 
+    public override void OnJoinedLobby()
+    {
+        StartCoroutine(InitiallyCreatedRooms());
+        connected = true;
+    }
+
+
+    IEnumerator InitiallyCreatedRooms()
+    {
+        yield return new WaitForSeconds(1.0f);
+        if (connected)
+        {
+            // Wait for a delay before creating rooms
+            yield return new WaitForSeconds(0.001f);
+
+            for (int i = 1; i <= 5; i++)
+            {
+
+                string dumbRoomName = "Room " + i;
+                RoomOptions dumbOptions = new RoomOptions() { MaxPlayers = 3 };
+                //RoomOptions roomOptions = new RoomOptions() { MaxPlayers = 3 };
+                //PhotonNetwork.CreateRoom(dumbRoomName, roomOptions, TypedLobby.Default);
+
+                // Instantiates the new dummy rooms into room list.
+                RoomItem newDumbRoom = Instantiate(roomItemPrefab, contentObject);
+                newDumbRoom.SetRoomName(dumbRoomName);
+                newDumbRoom.UpdatePlayerCount(0, dumbOptions.MaxPlayers);
+                //newDumbRoom.SetButtonColor(Color.red);
+                roomItemsList.Add(newDumbRoom);
+            }
+        }
+        
+    }
+
 
 
     public void OnClickCreate()
@@ -93,6 +127,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         {
             RoomItem newRoom = Instantiate(roomItemPrefab, contentObject);
             newRoom.SetRoomName(room.Name);
+            newRoom.UpdatePlayerCount(room.PlayerCount, room.MaxPlayers); // Updates the player counter.
             roomItemsList.Add(newRoom);
         }
 
