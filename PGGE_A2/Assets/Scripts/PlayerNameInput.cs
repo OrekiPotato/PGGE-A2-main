@@ -13,10 +13,12 @@ public class PlayerNameInput : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        mInputField = this.GetComponent<InputField>();
+        // Refactoring 3 (simplification)
+        mInputField = GetComponent<InputField>();
 
         string defaultName = string.Empty;
 
+        // Refactoring 1
         // Moved "PlayerPrefs.HasKey(playerNamePrefKey)" into main conditional statement for easy readability.
         if (mInputField != null && PlayerPrefs.HasKey(playerNamePrefKey)) 
         {

@@ -50,12 +50,14 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        // Refactoring 2 (Amended redundant comments)
+
         mFsm.Update();
         Aim();
 
-        // For Student ----------------------------------------------------//
-        // Implement the logic of button clicks for shooting. 
-        //-----------------------------------------------------------------//
+        // Refactoring 2 (Amended redundant comments)
+
+        // Logic to check which button is pressed and updates attack button states.
 
         if (Input.GetButton("Fire1"))
         {
@@ -93,31 +95,10 @@ public class Player : MonoBehaviour
 
     public void Aim()
     {
-        // For Student ----------------------------------------------------------//
-        // Implement the logic of aiming and showing the crosshair
-        // if there is an intersection.
-        //
-        // Hints:
-        // Find the direction of fire.
-        // Find gunpoint as mentioned in the worksheet.
-        // Find the layer mask for objects that you want to intersect with.
-        //
-        // Do the Raycast
-        // if (intersected)
-        // {
-        //     // Draw a line as debug to show the aim of fire in scene view.
-        //     // Find the transformed intersected point to screenspace
-        //     // and then transform the crosshair position to this
-        //     // new position.
-        //     // Enable or set active the crosshair gameobject.
-        // }
-        // else
-        // {
-        //     // Hide or set inactive the crosshair gameobject.
-        // }
-        //-----------------------------------------------------------------------//
+        // Refactoring 2 (Amended redundant comments)
 
         Vector3 dir = -mGunTransform.right.normalized;
+
         // Find gunpoint as mentioned in the worksheet.
         Vector3 gunpoint = mGunTransform.transform.position +
                            dir * 1.2f -
@@ -190,6 +171,7 @@ public class Player : MonoBehaviour
         }
     }
 
+    // Instantiates the bullet in a specific direction with ids for specific attack buttons (0,1,2)
     public void FireBullet()
     {
         if (mBulletPrefab == null) return;
@@ -203,6 +185,7 @@ public class Player : MonoBehaviour
         bullet.GetComponent<Rigidbody>().AddForce(dir * mBulletSpeed, ForceMode.Impulse);
     }
 
+    // Handles firing process including shooting of bullets. Also with ids for specific attack buttons (0,1,2)
     IEnumerator Coroutine_Firing(int id)
     {
         mFiring[id] = true;
